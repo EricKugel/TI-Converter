@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #container {
+                margin: auto;
+                width: 70%;
+                background-color: gray;
+                height: 600px;
+                padding: 25px;
+                margin-top: 50px;
+                border-radius: 5px;
+            }
+            #input {
+                float: left;
+                width: 48%;
+            }
+            #output {
+                float: right;
+                width: 48%;
+            }
+            textarea {
+                resize: none;
+                width: 100%;
+                height: 400px;
+                float: left;
+            }
+            button {
+                margin-top: 20px;
+            }
+            h2 {
+                text-align: center;
+            }
+            a {
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "container">
+            <h2>
+                Text to TI-84 Code Converter<br\>
+                
+            </h2>
+            <div id = input>
+                <textarea id = "inputArea" placeholder = "Notes...">
+    
+                </textarea><br\>
+                <button id = "convert" onclick = "convert()">Convert</button>
+            </div>
+            <div id = "output">
+                <textarea id = "outputArea">
+    
+                </textarea>
+            </div>
+        </div>
+        <a href = "instructions.html" style = "display: block; position: absolute; left: 20px; bottom: 20px;">Instructions</a>
+        <script>
+            function convert() {
+                document.getElementById("outputArea").value = "";
+                let text = document.getElementById("inputArea").value.trim();
+                let lines = text.split("\n");
+                let dispLines = [];
+                lines.forEach((element, index) => {
+                    while (element.length > 16) {
+                      dispLines.push(element.substring(0, 16))
+                      element = element.substring(16);  
+                    }
+                    dispLines.push(element);
+                });
+                debugger;
+                for (var i = 0; i < dispLines.length; i += 7) {
+                    var toDisplay = [];
+                    if (i + 7 > dispLines.length) {
+                        toDisplay = dispLines.slice(i, i + (dispLines.length % 7));
+                    } else {
+                        toDisplay = dispLines.slice(i, i + 7);
+                    }
+                    document.getElementById("outputArea").value += "ClrHome\n";
+                    toDisplay.forEach((element) => {
+                        document.getElementById("outputArea").value += "Disp \"" + element + "\n";
+                    });
+                    document.getElementById("outputArea").value += "Input \"NEXT \",P\n";
+                }
+            }
+        </script>
+        <p style = "display: block; position: absolute; right: 20px; bottom: 20px;">Eric Kugel 2021</p>
+    </body>
+</html>
